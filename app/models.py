@@ -77,6 +77,9 @@ class Transaction(models.Model):
     def __str__(self):
         return f'{self.created_at} Reference No. {self.id}'
 
+    class Meta:
+        ordering = '-created_at'
+
 
 class Wallet(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
