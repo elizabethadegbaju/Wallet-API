@@ -5,7 +5,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 
-from app.models import User
+from app.models import User, Transaction, Wallet
 
 
 class UserCreationForm(forms.ModelForm):
@@ -73,4 +73,6 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Transaction)
+admin.site.register(Wallet)
 admin.site.unregister(Group)

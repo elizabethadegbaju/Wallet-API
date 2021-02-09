@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 
@@ -58,3 +60,47 @@ class User(AbstractBaseUser):
     def is_staff(self) -> bool:
         """Is the user a member of staff?"""
         return self.is_admin
+
+
+class Transaction(models.Model):
+    TRANSACTION_TYPE = [
+        ('D', 'Deposit'),
+        ('W', 'Withdraw')
+    ]
+
+    id = models.CharField(max_length=20, primary_key=True)
+    wallet = models.ForeignKey(to='Wallet', on_delete=models.CASCADE)
+    type = models.CharField(choices=TRANSACTION_TYPE, max_length=20)
+    value = models.DecimalField(decimal_places=2, max_digits=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.created_at} Reference No. {self.id}'
+
+
+class Wallet(models.Model):
+    id = models.CharField(max_length=10, primary_key=True)
+    user = models.ForeignKey(to='User', on_delete=models.CASCADE)
+    balance = models.DecimalField(decimal_places=2, default=0, max_digits=20)
+    name = models.CharField(max_length=255)
+
+    def withdraw(self, amount):
+        self.balance -= amount
+        transaction_id = int(round(time.time() * 1000))
+        transaction = Transaction.objects.create(id=transaction_id,
+                                                 wallet=self, type='W',
+                                                 value=amount)
+        self.save()
+        transaction.save()
+
+    def deposit(self, amount):
+        self.balance += amount
+        transaction_id = int(round(time.time() * 1000))
+        transaction = Transaction.objects.create(id=transaction_id,
+                                                 wallet=self, type='D',
+                                                 value=amount)
+        self.save()
+        transaction.save()
+
+    def __str__(self):
+        return f'({self.user}) {self.name}'
