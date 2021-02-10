@@ -29,6 +29,6 @@ urlpatterns = [
     path('fund-wallet/', views.api_fund_wallet, name='fund-wallet'),
     path('create-wallet/', views.api_create_wallet, name='create-wallet'),
     path('transfer-funds/', views.api_transfer_funds, name='transfer-funds'),
-    path('transaction-history', views.api_transaction_history,
+    path('transaction-history/', views.api_transaction_history,
          name='transaction-history')
 ]
