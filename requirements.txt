@@ -3,8 +3,10 @@ certifi==2020.12.5
 chardet==4.0.0
 coreapi==2.3.3
 coreschema==0.0.4
+dj-database-url==0.5.0
 Django==3.1.6
 django-decouple==2.1
+django-heroku==0.3.1
 djangorestframework==3.12.2
 gunicorn==20.0.4
 idna==2.10
@@ -13,6 +15,7 @@ itypes==1.2.0
 Jinja2==2.11.3
 Markdown==3.3.3
 MarkupSafe==1.1.1
+psycopg2==2.8.6
 Pygments==2.7.4
 python-decouple==3.4
 pytz==2021.1
@@ -22,4 +25,5 @@ sqlparse==0.4.1
 typing-extensions==3.7.4.3
 uritemplate==3.0.1
 urllib3==1.26.3
+whitenoise==5.2.0
 zipp==3.4.0
