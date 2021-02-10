@@ -17,10 +17,8 @@ from app.serializers import *
 @csrf_exempt
 def api_transaction_history(request):
     """
-    List all transactions of logged in user.
-
-    :param request:
-    :return: JSON Response:
+    get: Retrieves the transaction history of the logged in user in reverse
+    chronological order
     """
     transactions = Transaction.objects.filter(wallet__user=request.user)
     serializer = TransactionSerializer(transactions, many=True)
@@ -32,6 +30,14 @@ def api_transaction_history(request):
 @renderer_classes((JSONRenderer,))
 @csrf_exempt
 def api_fund_wallet(request):
+    """
+    post: Creates a transaction between two wallets. User is only permitted
+    to transfer from a wallet belonging to them.
+    {
+        amount: 300.50
+        wallet: "0123456789"
+    }
+    """
     data = JSONParser().parse(request)
     amount = data['amount']
     wallet_id = str(data['wallet'])
