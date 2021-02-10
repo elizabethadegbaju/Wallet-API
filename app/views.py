@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, \
+    permission_classes
 from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -11,8 +12,8 @@ from app.models import User
 from app.serializers import *
 
 
-@login_required
 @api_view(('GET',))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((JSONRenderer,))
 @csrf_exempt
 def api_transaction_history(request):
@@ -25,8 +26,8 @@ def api_transaction_history(request):
     return Response(data=serializer.data)
 
 
-@login_required
 @api_view(('POST',))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((JSONRenderer,))
 @csrf_exempt
 def api_fund_wallet(request):
@@ -80,8 +81,8 @@ def api_login(request):
                         data={'error', f'User {email} not found.'})
 
 
-@login_required
 @api_view(('POST',))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((JSONRenderer,))
 @csrf_exempt
 def api_create_wallet(request):
@@ -95,8 +96,8 @@ def api_create_wallet(request):
     return Response(status=201, data={'success': f'Wallet created ({name})'})
 
 
-@login_required
 @api_view(('POST',))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((JSONRenderer,))
 @csrf_exempt
 def api_transfer_funds(request):
