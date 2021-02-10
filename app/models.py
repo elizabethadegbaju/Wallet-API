@@ -78,7 +78,7 @@ class Transaction(models.Model):
         return f'{self.created_at} Reference No. {self.id}'
 
     class Meta:
-        ordering = '-created_at'
+        ordering = ['-created_at']
 
 
 class Wallet(models.Model):
