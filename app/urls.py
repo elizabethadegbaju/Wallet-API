@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
 
 from app import views
@@ -22,8 +24,6 @@ API_TITLE = 'Wallet API'
 API_DESCRIPTION = 'A Django REST API to perform operations on mobile wallets.'
 
 urlpatterns = [
-    path('docs/',
-         include_docs_urls(title=API_TITLE, description=API_DESCRIPTION)),
     path('register/', views.api_create_account, name='register'),
     path('login/', views.api_login, name='login'),
     path('fund-wallet/', views.api_fund_wallet, name='fund-wallet'),

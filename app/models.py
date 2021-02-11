@@ -82,8 +82,8 @@ class Transaction(models.Model):
 
 
 class Wallet(models.Model):
-    id = models.CharField(max_length=10, primary_key=True)
-    user = models.ForeignKey(to='User', on_delete=models.CASCADE)
+    id = models.CharField(max_length=20, primary_key=True)
+    # user = models.ForeignKey(to='User', on_delete=models.CASCADE)
     balance = models.DecimalField(decimal_places=2, default=0, max_digits=20)
     name = models.CharField(max_length=255)
 
@@ -106,4 +106,4 @@ class Wallet(models.Model):
         transaction.save()
 
     def __str__(self):
-        return f'({self.user}) {self.name}'
+        return f'({self.id}) {self.name}'
