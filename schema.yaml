@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Wallet API
+  version: 1.0.0
+  contact:
+    name: Elizabeth Adegbaju
+    email: adeotunadegbaju@gmail.com
+  description: An API to perform operations on a mobile wallet.
+paths:
+  /api/transaction-history/:
+    get:
+      operationId: listapi_transaction_history
+      description: Retrieves the transaction history in reverse chronological order
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+                example:
+                  - id: '1613039673345'
+                    wallet:
+                      id: '1613036048'
+                      name: Vicky's wallet
+                      balance: '500000.00'
+                    type: D
+                    value: '500000.00'
+                    created_at: '2021-02-11T10:34:33.344716Z'
+                  - id: '1613039256183'
+                    wallet:
+                      id: '1613035306'
+                      name: Ade's Savings Wallet
+                      balance: '2000.00'
+                    type: D
+                    value: '2000.00'
+                    created_at: '2021-02-11T10:27:36.187013Z'
+                  - id: '1613039255248'
+                    wallet:
+                      id: 000737832
+                      name: Ade's Personal Wallet
+                      balance: '3000.00'
+                    type: W
+                    value: '2000.00'
+                    created_at: '2021-02-11T10:27:35.252259Z'
+                  - id: '1613038526200'
+                    wallet:
+                      id: 000737832
+                      name: Ade's Personal Wallet
+                      balance: '3000.00'
+                    type: D
+                    value: '5000.00'
+                    created_at: '2021-02-11T10:15:26.200099Z'
+                  
+          description: ''
+      tags:
+        - api
+  /api/register/:
+    post:
+      operationId: createapi_create_account
+      description: Create user account with specified details.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+          application/x-www-form-urlencoded:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+          multipart/form-data:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+        - api
+  /api/login/:
+    post:
+      operationId: createapi_login
+      description: Log in user with specified details.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+          application/x-www-form-urlencoded:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+          multipart/form-data:
+            schema: {
+              $ref: "#/components/schemas/User"
+            }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+        - api
+  /api/fund-wallet/:
+    post:
+      operationId: createapi_fund_wallet
+      description: Deposit funds into specified wallet.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {
+              $ref: "#/components/schemas/Fund"
+            }
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+        - api
+  /api/create-wallet/:
+    post:
+      operationId: createapi_create_wallet
+      description: Create a wallet with the given name and return the new wallet's
+        ID.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {
+              $ref: "#/components/schemas/Wallet"
+            }
+          application/x-www-form-urlencoded:
+            schema: {
+              $ref: "#/components/schemas/Wallet"
+            }
+          multipart/form-data:
+            schema: {
+              $ref: "#/components/schemas/Wallet"
+            }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+        - api
+  /api/transfer-funds/:
+    post:
+      operationId: createapi_transfer_funds
+      description: Transfers funds from one wallet to the other and creates the
+        related transaction logs.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {
+              $ref: "#/components/schemas/Send"
+            }
+          application/x-www-form-urlencoded:
+            schema: {
+              $ref: "#/components/schemas/Send"
+            }
+          multipart/form-data:
+            schema: {
+              $ref: "#/components/schemas/Send"
+            }
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+        - api
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Fund:
+      type: object
+      properties:
+        wallet_id:
+          type: string
+        amount:
+          type: number
+    Wallet:
+      type: object
+      properties:
+        name:
+          type: string
+    Send:
+      type: object
+      properties:
+        from_wallet:
+          type: string
+        to_wallet:
+          type: string
+        amount:
+          type: number
+servers:
+  - url: https://wallet-restapi.herokuapp.com/api/
+    description: Server on Heroku
